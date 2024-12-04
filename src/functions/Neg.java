@@ -1,13 +1,14 @@
 package functions;
 
-public class Sin extends Unary {
+public class Neg extends Unary {
 
-    public Sin(Function arg) {
+    public Neg(Function arg) {
         super(arg);
     }
 
+    @Override
     public String toString() {
-        return "sin(" + arg.toString() + ")";
+        return "-" + arg.toString();
     }
 
     @Override

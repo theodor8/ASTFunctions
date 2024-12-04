@@ -1,9 +1,7 @@
 package functions;
 
-public interface Function {
+public abstract class Function {
 
-    double eval();
-
-    Function derivative();
+    public abstract Function accept(Visitor v);
 
 }

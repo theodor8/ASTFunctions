@@ -1,22 +1,17 @@
 package functions;
 
-public class Cos extends UnaryFunction {
+public class Cos extends Unary {
 
-    public Cos(Function x) {
-        super(x);
+    public Cos(Function arg) {
+        super(arg);
     }
 
     public String toString() {
-        return "Cos(" + f.toString() + ")";
+        return "cos(" + arg.toString() + ")";
     }
 
     @Override
-    public double eval() {
-        return Math.cos(f.eval());
-    }
-
-    @Override
-    public Function derivative() {
-        return new Sin(f);
+    public Function accept(Visitor v) {
+        return v.visit(this);
     }
 }

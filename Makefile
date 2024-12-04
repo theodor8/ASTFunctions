@@ -9,4 +9,9 @@ classes:
 run: classes
 	java -cp classes Main
 
-.PHONY: all clean classes run
+test:
+	javac -d classes -cp src/test/junit.jar -sourcepath src src/test/Tests.java
+	java -jar src/test/junit.jar -cp classes -c test.Tests
+
+
+.PHONY: all clean classes run test

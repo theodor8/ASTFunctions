@@ -1,13 +1,13 @@
 package functions;
 
-public class Add extends Binary {
+public class Div extends Binary {
 
-    public Add(Function lhs, Function rhs) {
+    public Div(Function lhs, Function rhs) {
         super(lhs, rhs);
     }
 
     public String toString() {
-        return "(" + lhs.toString() + " + " + rhs.toString() + ")";
+        return "(" + lhs.toString() + " / " + rhs.toString() + ")";
     }
 
     @Override

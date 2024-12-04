@@ -1,13 +1,14 @@
 package functions;
 
-public class Add extends Binary {
+public class Mul extends Binary {
 
-    public Add(Function lhs, Function rhs) {
+    public Mul(Function lhs, Function rhs) {
         super(lhs, rhs);
     }
 
+    @Override
     public String toString() {
-        return "(" + lhs.toString() + " + " + rhs.toString() + ")";
+        return "(" + lhs.toString() + " * " + rhs.toString() + ")";
     }
 
     @Override
