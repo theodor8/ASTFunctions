@@ -1,4 +1,4 @@
-package functions;
+package function;
 
 public abstract class Binary extends Function {
     protected Function lhs;

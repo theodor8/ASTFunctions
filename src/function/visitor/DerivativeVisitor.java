@@ -1,4 +1,6 @@
-package functions;
+package function.visitor;
+
+import function.*;
 
 public class DerivativeVisitor extends Visitor {
 
@@ -43,8 +45,23 @@ public class DerivativeVisitor extends Visitor {
     }
 
     @Override
+    public Function visit(NamedCon f) {
+        return new Con(0);
+    }
+
+    @Override
     public Function visit(Neg f) {
         return new Neg(f.getArg().accept(this));
+    }
+
+    @Override
+    public Function visit(Exp f) {
+        return new Mul(new Exp(f.getArg()), f.getArg().accept(this));
+    }
+
+    @Override
+    public Function visit(Log f) {
+        return new Div(f.getArg().accept(this), f.getArg());
     }
 
 }

@@ -1,4 +1,6 @@
-package functions;
+package function.visitor;
+
+import function.*;
 
 public class EvalVisitor extends Visitor {
 
@@ -43,16 +45,6 @@ public class EvalVisitor extends Visitor {
     }
 
     @Override
-    public Function visit(Div f) {
-        Function lhs = f.getLhs().accept(this);
-        Function rhs = f.getRhs().accept(this);
-        if (lhs instanceof Con cl && rhs instanceof Con cr) {
-            return new Con(cl.getValue() / cr.getValue());
-        }
-        return new Div(lhs, rhs);
-    }
-
-    @Override
     public Function visit(Mul f) {
         Function lhs = f.getLhs().accept(this);
         Function rhs = f.getRhs().accept(this);
@@ -85,6 +77,32 @@ public class EvalVisitor extends Visitor {
     }
 
     @Override
+    public Function visit(Div f) {
+        Function lhs = f.getLhs().accept(this);
+        Function rhs = f.getRhs().accept(this);
+        if (lhs instanceof Con cl) {
+            if (cl.getValue() == 0) {
+                return new Con(0);
+            }
+        }
+        if (rhs instanceof Con cr) {
+            if (cr.getValue() == 1) {
+                return lhs;
+            }
+            if (cr.getValue() == -1) {
+                return new Neg(lhs);
+            }
+            if (cr.getValue() == 0) {
+                throw new ArithmeticException("Division by zero");
+            }
+        }
+        if (lhs instanceof Con cl && rhs instanceof Con cr) {
+            return new Con(cl.getValue() / cr.getValue());
+        }
+        return new Div(lhs, rhs);
+    }
+
+    @Override
     public Function visit(Neg f) {
         Function arg = f.getArg().accept(this);
 
@@ -96,7 +114,42 @@ public class EvalVisitor extends Visitor {
         }
 
         return new Neg(arg); 
+    }
 
+    @Override
+    public Function visit(Sin f) {
+        Function arg = f.getArg().accept(this);
+        if (arg instanceof Con c) {
+            return new Con(Math.sin(c.getValue()));
+        }
+        return new Sin(arg);
+    }
+
+    @Override
+    public Function visit(Cos f) {
+        Function arg = f.getArg().accept(this);
+        if (arg instanceof Con c) {
+            return new Con(Math.cos(c.getValue()));
+        }
+        return new Cos(arg);
+    }
+
+    @Override
+    public Function visit(Exp f) {
+        Function arg = f.getArg().accept(this);
+        if (arg instanceof Con c) {
+            return new Con(Math.exp(c.getValue()));
+        }
+        return new Exp(arg);
+    }
+
+    @Override
+    public Function visit(Log f) {
+        Function arg = f.getArg().accept(this);
+        if (arg instanceof Con c) {
+            return new Con(Math.log(c.getValue()));
+        }
+        return new Log(arg);
     }
 
 }

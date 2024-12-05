@@ -1,4 +1,6 @@
-package functions;
+package function;
+
+import function.visitor.Visitor;
 
 public class Add extends Binary {
 
@@ -7,7 +9,7 @@ public class Add extends Binary {
     }
 
     public String toString() {
-        return "(" + lhs.toString() + " + " + rhs.toString() + ")";
+        return lhs.toString() + " + " + rhs.toString();
     }
 
     @Override

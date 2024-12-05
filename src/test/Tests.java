@@ -8,7 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 // import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import functions.*;
+import function.*;
+import function.visitor.EvalVisitor;
 
 
 public class Tests {
@@ -86,11 +87,15 @@ public class Tests {
         assertEquals(new Var(), new Mul(new Var(), new Con(1)).accept(ev));
         assertEquals(new Neg(new Var()), new Mul(new Con(-1), new Var()).accept(ev));
         assertEquals(new Neg(new Var()), new Mul(new Var(), new Con(-1)).accept(ev));
-
         assertEquals(new Var(), new Add(new Con(0), new Var()).accept(ev));
         assertEquals(new Var(), new Add(new Var(), new Con(0)).accept(ev));
         assertEquals(new Var(), new Sub(new Var(), new Con(0)).accept(ev));
         assertEquals(new Neg(new Var()), new Sub(new Con(0), new Var()).accept(ev));
+        assertEquals(new Var(), new Div(new Var(), new Con(1)).accept(ev));
+        assertEquals(new Neg(new Var()), new Div(new Var(), new Con(-1)).accept(ev));
+        assertEquals(new Con(0), new Div(new Con(0), new Var()).accept(ev));
+        assertThrows(ArithmeticException.class, () -> new Div(new Con(1), new Con(0)).accept(ev));
+        assertThrows(ArithmeticException.class, () -> new Div(new Var(), new Con(0)).accept(ev));
 
     }
 

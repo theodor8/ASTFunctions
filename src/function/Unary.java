@@ -1,4 +1,4 @@
-package functions;
+package function;
 
 public abstract class Unary extends Function {
     protected Function arg;

@@ -1,4 +1,6 @@
-package functions;
+package function;
+
+import function.visitor.Visitor;
 
 public class Neg extends Unary {
 

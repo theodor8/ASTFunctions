@@ -1,4 +1,6 @@
-package functions;
+package function.visitor;
+
+import function.*;
 
 public abstract class Visitor {
     public Function visit(Add f) {
@@ -25,7 +27,16 @@ public abstract class Visitor {
     public Function visit(Con f) {
         return new Con(f.getValue());
     }
+    public Function visit(NamedCon f) {
+        return new NamedCon(f.getName(), f.getValue());
+    }   
     public Function visit(Neg f) {
         return new Neg(f.getArg().accept(this));
+    }
+    public Function visit(Log f) {
+        return new Log(f.getArg().accept(this));
+    }
+    public Function visit(Exp f) {
+        return new Exp(f.getArg().accept(this));
     }
 }
