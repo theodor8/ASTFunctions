@@ -101,12 +101,16 @@ public class Parser {
             result = expression();
             /// This captures unbalanced parentheses!
             if (this.st.nextToken() != ')') {
-                throw new Exception("expected ')'");
+                throw new Exception("Error: Expected ')'");
             }
         } else if (this.st.ttype == '-') {
             result = unary();
         } else if (this.st.ttype == StreamTokenizer.TT_WORD) {
-            if (st.sval.equals("sin") || st.sval.equals("cos") || st.sval.equals("exp") || st.sval.equals("log")) {
+            if (st.sval.equals("sin") || 
+                st.sval.equals("cos") || 
+                st.sval.equals("exp") || 
+                st.sval.equals("log") || 
+                st.sval.equals("d")) {
                 result = unary();
             } else {
                 result = identifier();
@@ -131,6 +135,8 @@ public class Parser {
             result = new Cos(primary());
         } else if (operation.equals("log")) {
             result = new Log(primary());
+        } else if (operation.equals("d")) {
+            result = new Derivative(primary());
         } else {
             result = new Exp(primary());
         }

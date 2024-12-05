@@ -39,4 +39,7 @@ public abstract class Visitor {
     public Function visit(Exp f) {
         return new Exp(f.getArg().accept(this));
     }
+    public Function visit(Derivative f) {
+        return new Derivative(f.getArg().accept(this));
+    }
 }

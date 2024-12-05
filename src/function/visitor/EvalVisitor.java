@@ -152,4 +152,10 @@ public class EvalVisitor extends Visitor {
         return new Log(arg);
     }
 
+    @Override
+    public Function visit(Derivative f) {
+        Function arg = f.getArg().accept(this);
+        return arg.accept(new DerivativeVisitor()).accept(this);
+    }
+
 }
