@@ -158,4 +158,14 @@ public class EvalVisitor extends Visitor {
         return arg.accept(new DerivativeVisitor()).accept(this);
     }
 
+    @Override
+    public Function visit(Pow f) {
+        Function lhs = f.getLhs().accept(this);
+        Function rhs = f.getRhs().accept(this);
+        if (lhs instanceof Con cl && rhs instanceof Con cr) {
+            return new Con(Math.pow(cl.getValue(), cr.getValue()));
+        }
+        return new Pow(lhs, rhs);
+    }
+
 }

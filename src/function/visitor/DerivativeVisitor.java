@@ -4,15 +4,6 @@ import function.*;
 
 public class DerivativeVisitor extends Visitor {
 
-    @Override
-    public Function visit(Add f) {
-        return new Add(f.getLhs().accept(this), f.getRhs().accept(this));
-    }
-
-    @Override
-    public Function visit(Sub f) {
-        return new Sub(f.getLhs().accept(this), f.getRhs().accept(this));
-    }
 
     @Override
     public Function visit(Sin f) {
@@ -62,6 +53,11 @@ public class DerivativeVisitor extends Visitor {
     @Override
     public Function visit(Log f) {
         return new Div(f.getArg().accept(this), f.getArg());
+    }
+
+    @Override
+    public Function visit(Pow f) {
+        throw new RuntimeException("Not implemented yet");
     }
 
 }

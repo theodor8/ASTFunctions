@@ -42,4 +42,7 @@ public abstract class Visitor {
     public Function visit(Derivative f) {
         return new Derivative(f.getArg().accept(this));
     }
+    public Function visit(Pow f) {
+        return new Pow(f.getLhs().accept(this), f.getRhs().accept(this));
+    }
 }

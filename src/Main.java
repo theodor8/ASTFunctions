@@ -28,8 +28,9 @@ public class Main {
                 System.out.println(e.getMessage());
                 continue;
             }
+            System.out.println(" > Parsed: " + parsed);
             Function evaluated = parsed.accept(new EvalVisitor());
-            System.out.println(" > " + evaluated);
+            System.out.println(" > Evaluated: " + evaluated);
         }
         sc.close();
 

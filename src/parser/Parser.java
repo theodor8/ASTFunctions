@@ -78,16 +78,29 @@ public class Parser {
     }
 
     private Function term() throws Exception {
-        Function result = primary();
+        Function result = pow();
         this.st.nextToken();
         while (this.st.ttype == '*' || this.st.ttype == '/') {
             int operation = st.ttype;
             this.st.nextToken();
             if (operation == '*') {
-                result = new Mul(result, primary());
+                result = new Mul(result, pow());
             } else {
-                result = new Div(result, primary());
+                result = new Div(result, pow());
             }
+            this.st.nextToken();
+        }
+        this.st.pushBack();
+        return result;
+    }
+
+
+    private Function pow() throws Exception {
+        Function result = primary();
+        this.st.nextToken();
+        while (this.st.ttype == '^') {
+            this.st.nextToken();
+            result = new Pow(result, primary());
             this.st.nextToken();
         }
         this.st.pushBack();
@@ -109,8 +122,8 @@ public class Parser {
             if (st.sval.equals("sin") || 
                 st.sval.equals("cos") || 
                 st.sval.equals("exp") || 
-                st.sval.equals("log") || 
-                st.sval.equals("d")) {
+                st.sval.equals("log") ||
+                st.sval.equals("der")) {
                 result = unary();
             } else {
                 result = identifier();
@@ -135,7 +148,7 @@ public class Parser {
             result = new Cos(primary());
         } else if (operation.equals("log")) {
             result = new Log(primary());
-        } else if (operation.equals("d")) {
+        } else if (operation.equals("der")) {
             result = new Derivative(primary());
         } else {
             result = new Exp(primary());
