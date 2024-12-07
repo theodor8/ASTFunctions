@@ -14,13 +14,19 @@ public class Parser {
 
     private StreamTokenizer st;
 
-    private static HashMap<String, Class<? extends Unary>> builtInFunctions = new HashMap<>();
+    private static HashMap<String, Class<? extends Unary>> builtinFuncs = new HashMap<>();
+    private static HashMap<String, Double> namedCons = new HashMap<>();
     static {
-        builtInFunctions.put("sin", Sin.class);
-        builtInFunctions.put("cos", Cos.class);
-        builtInFunctions.put("exp", Exp.class);
-        builtInFunctions.put("log", Log.class);
-        builtInFunctions.put("der", Derivative.class);
+        builtinFuncs.put("sin", Sin.class);
+        builtinFuncs.put("cos", Cos.class);
+        builtinFuncs.put("exp", Exp.class);
+        builtinFuncs.put("log", Log.class);
+        builtinFuncs.put("der", Derivative.class);
+
+        namedCons.put("pi", Math.PI);
+        namedCons.put("e", Math.E);
+        namedCons.put("phi", 1.61803398875);
+        namedCons.put("gamma", 0.5772156649);
     }
 
     public Function parse(String inputString) throws IOException {
@@ -54,21 +60,14 @@ public class Parser {
     }
 
 
-
     private Function identifier() throws IOException {
-        switch (this.st.sval) {
-            case "x":
-                return new Var();
-            
-            case "pi":
-                return new NamedCon("pi", Math.PI);
-
-            case "e":
-                return new NamedCon("e", Math.E);
-        
-            default:
-                throw new SyntaxErrorException("Syntax Error: Unexpected " + this.st.sval);
+        if (this.st.sval.equals("x")) {
+            return new Var();
         }
+        if (namedCons.containsKey(this.st.sval)) {
+            return new NamedCon(this.st.sval, namedCons.get(this.st.sval));
+        }
+        throw new SyntaxErrorException("Syntax Error: Unexpected " + this.st.sval);
     }
 
 
@@ -131,7 +130,7 @@ public class Parser {
         } else if (this.st.ttype == '-') {
             result = unary();
         } else if (this.st.ttype == StreamTokenizer.TT_WORD) {
-            if (builtInFunctions.containsKey(this.st.sval)) {
+            if (builtinFuncs.containsKey(this.st.sval)) {
                 result = unary();
             } else {
                 result = identifier();
@@ -152,9 +151,9 @@ public class Parser {
             return new Neg(primary());
         }
         try {
-            Class<? extends Unary> functionClass = builtInFunctions.get(operation);
-            Constructor<? extends Unary> functionClassConstructor = functionClass.getConstructor(Function.class);
-            return functionClassConstructor.newInstance(primary());
+            Class<? extends Unary> funcClass = builtinFuncs.get(operation);
+            Constructor<? extends Unary> funcClassCtor = funcClass.getConstructor(Function.class);
+            return funcClassCtor.newInstance(primary());
         } catch (IOException e) {
             throw e;
         }

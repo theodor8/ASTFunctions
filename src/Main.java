@@ -6,6 +6,9 @@ import function.*;
 import function.visitor.EvalVisitor;
 import parser.Parser;
 
+// TODO: integral visitor
+// TODO: acos, asin, tan, ...
+// TODO: tests
 
 public class Main {
 
