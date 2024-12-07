@@ -57,7 +57,7 @@ public class DerivativeVisitor extends Visitor {
 
     @Override
     public Function visit(Pow f) {
-        throw new RuntimeException("Not implemented yet");
+        throw new RuntimeException("Derivative of Pow not implemented yet");
     }
 
 }

@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import function.*;
@@ -24,7 +25,7 @@ public class Main {
             Function parsed;
             try {
                 parsed = parser.parse(input);
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.out.println(e.getMessage());
                 continue;
             }
