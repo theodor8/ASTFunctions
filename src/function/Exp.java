@@ -10,7 +10,7 @@ public class Exp extends Unary {
 
     @Override
     public String toString() {
-        return "exp(" + arg.toString() + ")";
+        return "exp(" + this.getArg().toString() + ")";
     }
 
     @Override

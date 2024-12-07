@@ -19,9 +19,11 @@ public class Parser {
     static {
         builtinFuncs.put("sin", Sin.class);
         builtinFuncs.put("cos", Cos.class);
+        builtinFuncs.put("tan", Tan.class);
         builtinFuncs.put("exp", Exp.class);
         builtinFuncs.put("log", Log.class);
         builtinFuncs.put("der", Derivative.class);
+        builtinFuncs.put("int", Integral.class);
 
         namedCons.put("pi", Math.PI);
         namedCons.put("e", Math.E);

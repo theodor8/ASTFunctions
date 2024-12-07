@@ -1,7 +1,7 @@
 package function;
 
 public abstract class Unary extends Function {
-    protected Function arg;
+    private Function arg;
 
     public Unary(Function arg) {
         this.arg = arg;

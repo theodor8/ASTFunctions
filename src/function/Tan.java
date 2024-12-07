@@ -2,20 +2,20 @@ package function;
 
 import function.visitor.Visitor;
 
-public class Derivative extends Unary {
+public class Tan extends Unary {
 
-    public Derivative(Function arg) {
-        super(arg);
+    public Tan(Function f) {
+        super(f);
     }
 
     @Override
     public String toString() {
-        return "der(" + this.getArg().toString() + ")";
+        return "tan(" + this.getArg().toString() + ")";
     }
 
     @Override
     public Function accept(Visitor v) {
         return v.visit(this);
     }
-    
+
 }

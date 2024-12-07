@@ -10,7 +10,7 @@ public class Log extends Unary {
 
     @Override
     public String toString() {
-        return "log(" + arg.toString() + ")";
+        return "log(" + this.getArg().toString() + ")";
     }
 
     @Override

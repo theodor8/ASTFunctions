@@ -9,7 +9,7 @@ public class Cos extends Unary {
     }
 
     public String toString() {
-        return "cos(" + arg.toString() + ")";
+        return "cos(" + this.getArg().toString() + ")";
     }
 
     @Override

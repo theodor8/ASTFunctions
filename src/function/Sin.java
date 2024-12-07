@@ -9,7 +9,7 @@ public class Sin extends Unary {
     }
 
     public String toString() {
-        return "sin(" + arg.toString() + ")";
+        return "sin(" + this.getArg().toString() + ")";
     }
 
     @Override

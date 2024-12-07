@@ -10,7 +10,7 @@ public class Neg extends Unary {
 
     @Override
     public String toString() {
-        return "-" + arg.toString();
+        return "-" + this.getArg().toString();
     }
 
     @Override

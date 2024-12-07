@@ -2,7 +2,7 @@ package function.visitor;
 
 import function.*;
 
-public class DerivativeVisitor extends Visitor {
+public class DerivativeVisitor implements Visitor {
 
 
     @Override
@@ -57,7 +57,34 @@ public class DerivativeVisitor extends Visitor {
 
     @Override
     public Function visit(Pow f) {
-        throw new RuntimeException("Derivative of Pow not implemented yet");
+        // TODO: derivative of pow
+        throw new UnsupportedOperationException("Derivative of pow not implemented yet");
+    }
+
+    @Override
+    public Function visit(Add f) {
+        return new Add(f.getLhs().accept(this), f.getRhs().accept(this));
+    }
+
+    @Override
+    public Function visit(Sub f) {
+        return new Sub(f.getLhs().accept(this), f.getRhs().accept(this));
+    }
+
+    @Override
+    public Function visit(Derivative f) {
+        return new Derivative(f.getArg().accept(this));
+    }
+
+    @Override
+    public Function visit(Tan f) {
+        // TODO: derivative of tan
+        throw new UnsupportedOperationException("Derivative of tan not implemented yet");
+    }
+
+    @Override
+    public Function visit(Integral f) {
+        return f.getArg();
     }
 
 }

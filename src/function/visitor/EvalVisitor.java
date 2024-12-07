@@ -2,7 +2,7 @@ package function.visitor;
 
 import function.*;
 
-public class EvalVisitor extends Visitor {
+public class EvalVisitor implements Visitor {
 
     @Override
     public Function visit(Add f) {
@@ -166,6 +166,36 @@ public class EvalVisitor extends Visitor {
             return new Con(Math.pow(cl.getValue(), cr.getValue()));
         }
         return new Pow(lhs, rhs);
+    }
+
+    @Override
+    public Function visit(Var f) {
+        return new Var();
+    }
+
+    @Override
+    public Function visit(Con f) {
+        return new Con(f.getValue());
+    }
+
+    @Override
+    public Function visit(NamedCon f) {
+        return new NamedCon(f.getName(), f.getValue());
+    }
+
+    @Override
+    public Function visit(Tan f) {
+        Function arg = f.getArg().accept(this);
+        if (arg instanceof Con c) {
+            return new Con(Math.tan(c.getValue()));
+        }
+        return new Tan(arg);
+    }
+
+    @Override
+    public Function visit(Integral f) {
+        Function arg = f.getArg().accept(this);
+        return arg.accept(new IntegralVisitor()).accept(this);
     }
 
 }
