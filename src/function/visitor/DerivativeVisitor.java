@@ -91,4 +91,9 @@ public class DerivativeVisitor implements Visitor {
         return new Derivative(new Ans());
     }
 
+    @Override
+    public Function visit(EvalVar f) {
+        return new Derivative(new EvalVar(f.getLhs(), f.getRhs()));
+    }
+
 }

@@ -5,8 +5,10 @@ import function.*;
 public class EvalVisitor implements Visitor {
 
     private Function ans = new Ans();
+    private Function evalVar = null;
 
     public Function eval(Function f) {
+        this.evalVar = null;
         Function evaluated = f.accept(this);
         this.ans = evaluated;
         return evaluated;
@@ -178,6 +180,9 @@ public class EvalVisitor implements Visitor {
 
     @Override
     public Function visit(Var f) {
+        if (this.evalVar != null) {
+            return this.evalVar;
+        }
         return new Var();
     }
 
@@ -208,7 +213,13 @@ public class EvalVisitor implements Visitor {
 
     @Override
     public Function visit(Ans f) {
-        return this.ans;
+        return this.ans.accept(this);
+    }
+
+    @Override
+    public Function visit(EvalVar f) {
+        this.evalVar = f.getRhs().accept(this);
+        return f.getLhs().accept(this);
     }
 
 }

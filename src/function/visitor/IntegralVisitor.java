@@ -100,4 +100,10 @@ public class IntegralVisitor implements Visitor {
         throw new UnsupportedOperationException("Unimplemented method 'visit'");
     }
 
+    @Override
+    public Function visit(EvalVar f) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'visit'");
+    }
+
 }

@@ -56,7 +56,7 @@ public class Parser {
             throw new SyntaxErrorException("Syntax Error: Expected an expression");
         }
 
-        result = expression();
+        result = evalVar();
         
         if (this.st.nextToken() != StreamTokenizer.TT_EOF) { // token should be an end of stream token if we are done
             if (this.st.ttype == StreamTokenizer.TT_WORD) {
@@ -81,6 +81,23 @@ public class Parser {
             return new NamedCon(this.st.sval, namedCons.get(this.st.sval));
         }
         throw new SyntaxErrorException("Syntax Error: Unexpected " + this.st.sval);
+    }
+
+    private Function evalVar() throws IOException {
+        Function result = expression();
+        this.st.nextToken();
+        while (this.st.ttype == '<' || this.st.ttype == '>') {
+            int operation = st.ttype;
+            this.st.nextToken();
+            if (operation == '<') {
+                result = new EvalVar(result, expression());
+            } else {
+                result = new EvalVar(expression(), result);
+            }
+            this.st.nextToken();
+        }
+        this.st.pushBack();
+        return result;
     }
 
 
@@ -136,7 +153,7 @@ public class Parser {
         Function result;
         if (this.st.ttype == '(') {
             this.st.nextToken();
-            result = expression();
+            result = evalVar();
             if (this.st.nextToken() != ')') {
                 throw new SyntaxErrorException("Syntax Error: Expected ')'");
             }
