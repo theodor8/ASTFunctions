@@ -10,7 +10,15 @@ public class EvalVar extends Binary {
 
     @Override
     public String toString() {
-        return getLhs().toString() + " < " + getRhs().toString();
+        String lhsString = getLhs().toString();
+        String rhsString = getRhs().toString();
+        if (getLhs() instanceof Binary) {
+            lhsString = "(" + lhsString + ")";
+        }
+        if (getRhs() instanceof Binary) {
+            rhsString = "(" + rhsString + ")";
+        }
+        return lhsString + " < " + rhsString;
     }
 
     @Override

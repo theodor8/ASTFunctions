@@ -206,18 +206,13 @@ public class EvalVisitor implements Visitor {
     }
 
     @Override
-    public Function visit(Integral f) {
-        Function arg = f.getArg().accept(this);
-        return arg.accept(new IntegralVisitor()).accept(this);
-    }
-
-    @Override
     public Function visit(Ans f) {
         return this.ans.accept(this);
     }
 
     @Override
     public Function visit(EvalVar f) {
+        // Save the evaluated variable so lhs can use it
         this.evalVar = f.getRhs().accept(this);
         return f.getLhs().accept(this);
     }

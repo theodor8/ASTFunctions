@@ -7,7 +7,6 @@ import function.visitor.*;
 import parser.Parser;
 
 // TODO: acos, asin, atan ...
-// TODO: tests
 
 public class Main {
 

@@ -23,7 +23,6 @@ public class Parser {
         builtinFuncs.put("exp", Exp.class);
         builtinFuncs.put("log", Log.class);
         builtinFuncs.put("der", Derivative.class);
-        // builtinFuncs.put("int", Integral.class);
 
         namedCons.put("pi", Math.PI);
         namedCons.put("e", Math.E);

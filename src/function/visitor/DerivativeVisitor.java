@@ -82,11 +82,6 @@ public class DerivativeVisitor implements Visitor {
     }
 
     @Override
-    public Function visit(Integral f) {
-        return f.getArg();
-    }
-
-    @Override
     public Function visit(Ans f) {
         return new Derivative(new Ans());
     }
