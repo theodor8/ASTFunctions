@@ -90,11 +90,6 @@ public class EvalVisitor implements Visitor {
     public Function visit(Div f) {
         Function lhs = f.getLhs().accept(this);
         Function rhs = f.getRhs().accept(this);
-        if (lhs instanceof Con cl) {
-            if (cl.getValue() == 0) {
-                return new Con(0);
-            }
-        }
         if (rhs instanceof Con cr) {
             if (cr.getValue() == 1) {
                 return lhs;
@@ -104,6 +99,11 @@ public class EvalVisitor implements Visitor {
             }
             if (cr.getValue() == 0) {
                 throw new ArithmeticException("Division by zero");
+            }
+        }
+        if (lhs instanceof Con cl) {
+            if (cl.getValue() == 0) {
+                return new Con(0);
             }
         }
         if (lhs instanceof Con cl && rhs instanceof Con cr) {

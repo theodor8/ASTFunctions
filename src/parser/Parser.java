@@ -33,6 +33,7 @@ public class Parser {
         functions.add("abs");
         functions.add("max");
         functions.add("min");
+        functions.add("sgn");
 
         identifiers.put("pi", Math.PI);
         identifiers.put("e", Math.E);
@@ -210,9 +211,12 @@ public class Parser {
             case "min":
                 a = primary();
                 return new Div(new Sub(new Add(a, new Var()), new Abs(new Sub(a, new Var()))), new Con(2));
+            case "sgn":
+                a = primary();
+                return new Div(a, new Abs(a));
         
             default:
-                throw new SyntaxErrorException("Syntax Error: Unexpected " + operation);
+                throw new RuntimeException();
         }
 
         // try {

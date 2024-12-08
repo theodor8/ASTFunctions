@@ -6,7 +6,6 @@ import function.*;
 import function.visitor.*;
 import parser.Parser;
 
-// TODO: functions
 // TODO: acos, asin, atan ...
 
 public class Main {
