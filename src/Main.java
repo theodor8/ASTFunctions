@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import function.*;
-import function.visitor.EvalVisitor;
+import function.visitor.*;
 import parser.Parser;
 
 // TODO: acos, asin, atan ...
@@ -13,10 +13,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Hello world :)");
-
         Parser parser = new Parser();
+        System.out.println("Available functions: " + parser.getAvailableFunctions());
+        System.out.println("Available constants: " + parser.getAvailableConstants());
+        System.out.println();
 
+
+
+        EvalVisitor ev = new EvalVisitor();
         Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.print(" < ");
@@ -32,8 +36,9 @@ public class Main {
                 continue;
             }
             System.out.println(" > Parsed: " + parsed);
-            Function evaluated = parsed.accept(new EvalVisitor());
+            Function evaluated = ev.eval(parsed);
             System.out.println(" > Evaluated: " + evaluated);
+            System.out.println();
         }
         sc.close();
 

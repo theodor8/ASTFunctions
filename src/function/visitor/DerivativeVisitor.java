@@ -78,13 +78,17 @@ public class DerivativeVisitor implements Visitor {
 
     @Override
     public Function visit(Tan f) {
-        // TODO: derivative of tan
-        throw new UnsupportedOperationException("Derivative of tan not implemented yet");
+        return new Div(f.getArg().accept(this), new Mul(new Cos(f.getArg()), new Cos(f.getArg())));
     }
 
     @Override
     public Function visit(Integral f) {
         return f.getArg();
+    }
+
+    @Override
+    public Function visit(Ans f) {
+        return new Derivative(new Ans());
     }
 
 }

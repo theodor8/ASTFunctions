@@ -2,18 +2,21 @@ package function;
 
 import function.visitor.Visitor;
 
-public class Sub extends Binary {
+public class Ans extends Function {
 
-    public Sub(Function f1, Function f2) {
-        super(f1, f2);
-    }
-
+    @Override
     public String toString() {
-        return getLhs().toString() + " - " + getRhs().toString();
+        return "a";
     }
 
     @Override
     public Function accept(Visitor v) {
         return v.visit(this);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Ans;
+    }
+
 }

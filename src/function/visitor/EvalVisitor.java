@@ -4,6 +4,14 @@ import function.*;
 
 public class EvalVisitor implements Visitor {
 
+    private Function ans = new Ans();
+
+    public Function eval(Function f) {
+        Function evaluated = f.accept(this);
+        this.ans = evaluated;
+        return evaluated;
+    }
+
     @Override
     public Function visit(Add f) {
         Function lhs = f.getLhs().accept(this);
@@ -196,6 +204,11 @@ public class EvalVisitor implements Visitor {
     public Function visit(Integral f) {
         Function arg = f.getArg().accept(this);
         return arg.accept(new IntegralVisitor()).accept(this);
+    }
+
+    @Override
+    public Function visit(Ans f) {
+        return this.ans;
     }
 
 }

@@ -1,1 +1,2 @@
 # ASTFunctions
+make run

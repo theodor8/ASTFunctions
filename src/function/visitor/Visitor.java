@@ -19,4 +19,5 @@ public interface Visitor {
     public Function visit(Derivative f);
     public Function visit(Integral f);
     public Function visit(Pow f);
+    public Function visit(Ans f);
 }

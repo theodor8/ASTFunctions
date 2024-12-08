@@ -9,7 +9,7 @@ public class Add extends Binary {
     }
 
     public String toString() {
-        return lhs.toString() + " + " + rhs.toString();
+        return getLhs().toString() + " + " + getRhs().toString();
     }
 
     @Override

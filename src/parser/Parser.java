@@ -23,13 +23,21 @@ public class Parser {
         builtinFuncs.put("exp", Exp.class);
         builtinFuncs.put("log", Log.class);
         builtinFuncs.put("der", Derivative.class);
-        builtinFuncs.put("int", Integral.class);
+        // builtinFuncs.put("int", Integral.class);
 
         namedCons.put("pi", Math.PI);
         namedCons.put("e", Math.E);
-        namedCons.put("phi", 1.61803398875);
-        namedCons.put("gamma", 0.5772156649);
     }
+
+    public String getAvailableFunctions() {
+        return builtinFuncs.keySet().toString();
+    }
+
+    public String getAvailableConstants() {
+        return namedCons.keySet().toString();
+    }
+
+
 
     public Function parse(String inputString) throws IOException {
         this.st = new StreamTokenizer(new StringReader(inputString)); // reads from inputString via stringreader.
@@ -65,6 +73,9 @@ public class Parser {
     private Function identifier() throws IOException {
         if (this.st.sval.equals("x")) {
             return new Var();
+        }
+        if (this.st.sval.equals("a")) {
+            return new Ans();
         }
         if (namedCons.containsKey(this.st.sval)) {
             return new NamedCon(this.st.sval, namedCons.get(this.st.sval));

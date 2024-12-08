@@ -10,7 +10,7 @@ public class Pow extends Binary {
 
     @Override
     public String toString() {
-        return "(" + lhs + ")^(" + rhs + ")";
+        return "(" + getLhs() + ")^(" + getRhs() + ")";
     }
 
     @Override

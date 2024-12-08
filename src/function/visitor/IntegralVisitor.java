@@ -94,4 +94,10 @@ public class IntegralVisitor implements Visitor {
         return new Integral(f.getArg().accept(this));
     }
 
+    @Override
+    public Function visit(Ans f) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'visit'");
+    }
+
 }

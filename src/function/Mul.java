@@ -10,12 +10,12 @@ public class Mul extends Binary {
 
     @Override
     public String toString() {
-        String lhsString = lhs.toString();
-        String rhsString = rhs.toString();
-        if (lhs instanceof Add || lhs instanceof Sub) {
+        String lhsString = getLhs().toString();
+        String rhsString = getRhs().toString();
+        if (getLhs() instanceof Add || getLhs() instanceof Sub) {
             lhsString = "(" + lhsString + ")";
         }
-        if (rhs instanceof Add || rhs instanceof Sub) {
+        if (getRhs() instanceof Add || getRhs() instanceof Sub) {
             rhsString = "(" + rhsString + ")";
         }
         return lhsString + " * " + rhsString;

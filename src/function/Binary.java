@@ -1,8 +1,8 @@
 package function;
 
 public abstract class Binary extends Function {
-    protected Function lhs;
-    protected Function rhs;
+    private Function lhs;
+    private Function rhs;
 
     public Binary(Function lhs, Function rhs) {
         this.lhs = lhs;
