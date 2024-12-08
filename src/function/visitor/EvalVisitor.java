@@ -40,7 +40,7 @@ public class EvalVisitor implements Visitor {
         Function rhs = f.getRhs().accept(this);
         if (lhs instanceof Con cl) {
             if (cl.getValue() == 0) {
-                return new Neg(rhs);
+                return new Neg(rhs).accept(this);
             }
         }
         if (rhs instanceof Con cr) {
@@ -66,7 +66,7 @@ public class EvalVisitor implements Visitor {
                 return rhs;
             }
             if (cl.getValue() == -1) {
-                return new Neg(rhs);
+                return new Neg(rhs).accept(this);
             }
         }
         if (rhs instanceof Con cr) {
@@ -77,7 +77,7 @@ public class EvalVisitor implements Visitor {
                 return lhs;
             }
             if (cr.getValue() == -1) {
-                return new Neg(lhs);
+                return new Neg(lhs).accept(this);
             }
         }
         if (lhs instanceof Con cl && rhs instanceof Con cr) {
@@ -100,7 +100,7 @@ public class EvalVisitor implements Visitor {
                 return lhs;
             }
             if (cr.getValue() == -1) {
-                return new Neg(lhs);
+                return new Neg(lhs).accept(this);
             }
             if (cr.getValue() == 0) {
                 throw new ArithmeticException("Division by zero");
@@ -207,6 +207,9 @@ public class EvalVisitor implements Visitor {
 
     @Override
     public Function visit(Ans f) {
+        if (this.ans instanceof Ans) {
+            return new Ans();
+        }
         return this.ans.accept(this);
     }
 
@@ -215,6 +218,15 @@ public class EvalVisitor implements Visitor {
         // Save the evaluated variable so lhs can use it
         this.evalVar = f.getRhs().accept(this);
         return f.getLhs().accept(this);
+    }
+
+    @Override
+    public Function visit(Abs f) {
+        Function arg = f.getArg().accept(this);
+        if (arg instanceof Con c) {
+            return new Con(Math.abs(c.getValue()));
+        }
+        return new Abs(arg);
     }
 
 }

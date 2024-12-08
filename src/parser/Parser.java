@@ -2,8 +2,8 @@ package parser;
 
 import java.io.StreamTokenizer;
 import java.io.StringReader;
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.io.IOException;
 
 
@@ -14,26 +14,36 @@ public class Parser {
 
     private StreamTokenizer st;
 
-    private static HashMap<String, Class<? extends Unary>> builtinFuncs = new HashMap<>();
-    private static HashMap<String, Double> namedCons = new HashMap<>();
+    private static HashSet<String> functions = new HashSet<String>();
+    private static HashMap<String, Double> identifiers = new HashMap<>();
     static {
-        builtinFuncs.put("sin", Sin.class);
-        builtinFuncs.put("cos", Cos.class);
-        builtinFuncs.put("tan", Tan.class);
-        builtinFuncs.put("exp", Exp.class);
-        builtinFuncs.put("log", Log.class);
-        builtinFuncs.put("der", Derivative.class);
+        // functions.put("sin", Sin.class);
+        // functions.put("cos", Cos.class);
+        // functions.put("tan", Tan.class);
+        // functions.put("exp", Exp.class);
+        // functions.put("log", Log.class);
+        // functions.put("der", Derivative.class);
+        // functions.put("abs", Abs.class);
+        functions.add("sin");
+        functions.add("cos");
+        functions.add("tan");
+        functions.add("exp");
+        functions.add("log");
+        functions.add("der");
+        functions.add("abs");
+        functions.add("max");
+        functions.add("min");
 
-        namedCons.put("pi", Math.PI);
-        namedCons.put("e", Math.E);
+        identifiers.put("pi", Math.PI);
+        identifiers.put("e", Math.E);
     }
 
     public String getAvailableFunctions() {
-        return builtinFuncs.keySet().toString();
+        return functions.toString();
     }
 
     public String getAvailableConstants() {
-        return namedCons.keySet().toString();
+        return identifiers.keySet().toString();
     }
 
 
@@ -76,8 +86,8 @@ public class Parser {
         if (this.st.sval.equals("a")) {
             return new Ans();
         }
-        if (namedCons.containsKey(this.st.sval)) {
-            return new NamedCon(this.st.sval, namedCons.get(this.st.sval));
+        if (identifiers.containsKey(this.st.sval)) {
+            return new NamedCon(this.st.sval, identifiers.get(this.st.sval));
         }
         throw new SyntaxErrorException("Syntax Error: Unexpected " + this.st.sval);
     }
@@ -159,7 +169,7 @@ public class Parser {
         } else if (this.st.ttype == '-') {
             result = unary();
         } else if (this.st.ttype == StreamTokenizer.TT_WORD) {
-            if (builtinFuncs.containsKey(this.st.sval)) {
+            if (functions.contains(this.st.sval)) {
                 result = unary();
             } else {
                 result = identifier();
@@ -179,16 +189,41 @@ public class Parser {
         if (operationNeg == '-') {
             return new Neg(primary());
         }
-        try {
-            Class<? extends Unary> funcClass = builtinFuncs.get(operation);
-            Constructor<? extends Unary> funcClassCtor = funcClass.getConstructor(Function.class);
-            return funcClassCtor.newInstance(primary());
-        } catch (IOException e) {
-            throw e;
+        switch (operation) {
+            case "sin":
+                return new Sin(primary());
+            case "cos":
+                return new Cos(primary());
+            case "tan":
+                return new Tan(primary());
+            case "exp":
+                return new Exp(primary());
+            case "log":
+                return new Log(primary());
+            case "der":
+                return new Derivative(primary());
+            case "abs":
+                return new Abs(primary());
+            case "max":
+                Function a = primary();
+                return new Div(new Add(new Add(a, new Var()), new Abs(new Sub(a, new Var()))), new Con(2));
+            case "min":
+                a = primary();
+                return new Div(new Sub(new Add(a, new Var()), new Abs(new Sub(a, new Var()))), new Con(2));
+        
+            default:
+                throw new SyntaxErrorException("Syntax Error: Unexpected " + operation);
         }
-        catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+
+        // try {
+        //     Class<? extends Unary> funcClass = functions.get(operation);
+        //     Constructor<? extends Unary> funcClassCtor = funcClass.getConstructor(Function.class);
+        //     return funcClassCtor.newInstance(primary());
+        // } catch (IOException e) {
+        //     throw e;
+        // } catch (Exception e) {
+        //     throw new RuntimeException(e.getMessage());
+        // }
     }
 
     private Function number() throws IOException {

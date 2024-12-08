@@ -20,4 +20,5 @@ public interface Visitor {
     public Function visit(Pow f);
     public Function visit(Ans f);
     public Function visit(EvalVar f);
+    public Function visit(Abs f);
 }

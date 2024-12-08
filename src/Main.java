@@ -6,6 +6,7 @@ import function.*;
 import function.visitor.*;
 import parser.Parser;
 
+// TODO: functions
 // TODO: acos, asin, atan ...
 
 public class Main {
@@ -16,7 +17,6 @@ public class Main {
         System.out.println("Available functions: " + parser.getAvailableFunctions());
         System.out.println("Available constants: " + parser.getAvailableConstants());
         System.out.println();
-
 
 
         EvalVisitor ev = new EvalVisitor();

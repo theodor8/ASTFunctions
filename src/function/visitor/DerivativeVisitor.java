@@ -91,4 +91,10 @@ public class DerivativeVisitor implements Visitor {
         return new Derivative(new EvalVar(f.getLhs(), f.getRhs()));
     }
 
+    @Override
+    public Function visit(Abs f) {
+        // TODO Derivative of abs
+        throw new UnsupportedOperationException("Unimplemented method 'derivative of abs'");
+    }
+
 }
