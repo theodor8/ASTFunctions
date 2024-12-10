@@ -6,6 +6,7 @@ import function.*;
 import function.visitor.*;
 import parser.Parser;
 
+// TODO: fact
 // TODO: acos, asin, atan ...
 
 public class Main {
@@ -35,7 +36,7 @@ public class Main {
             }
             System.out.println(" > Parsed: " + parsed);
             Function evaluated = ev.eval(parsed);
-            System.out.println(" > Evaluated: " + evaluated);
+            System.out.println(" > [" + ev.getAnsNumber() + "] Evaluated: " + evaluated);
             System.out.println();
         }
         sc.close();

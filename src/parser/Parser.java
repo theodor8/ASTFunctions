@@ -84,8 +84,14 @@ public class Parser {
         if (this.st.sval.equals("x")) {
             return new Var();
         }
-        if (this.st.sval.equals("a")) {
-            return new Ans();
+        if (this.st.sval.startsWith("a")) {
+            if (this.st.sval.equals("a")) {
+                return new Ans();
+            }
+            try {
+                return new Ans(Integer.valueOf(this.st.sval.substring(1)));
+            } catch (NumberFormatException e) {
+            }
         }
         if (identifiers.containsKey(this.st.sval)) {
             return new NamedCon(this.st.sval, identifiers.get(this.st.sval));
@@ -183,6 +189,7 @@ public class Parser {
         return result;
     }
 
+
     private Function unary() throws IOException {
         int operationNeg = st.ttype;
         String operation = st.sval;
@@ -216,7 +223,7 @@ public class Parser {
                 return new Div(a, new Abs(a));
         
             default:
-                throw new RuntimeException();
+                throw new RuntimeException("Unknown unary operation: " + operation);
         }
 
         // try {

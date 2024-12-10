@@ -1,16 +1,22 @@
 package function.visitor;
 
+import java.util.ArrayList;
+
 import function.*;
 
 public class EvalVisitor implements Visitor {
 
-    private Function ans = new Ans();
+    private ArrayList<Function> ansList = new ArrayList<>();
     private Function evalVar = null;
+
+    public int getAnsNumber() {
+        return this.ansList.size() - 1;
+    }
 
     public Function eval(Function f) {
         this.evalVar = null;
         Function evaluated = f.accept(this);
-        this.ans = evaluated;
+        this.ansList.add(evaluated);
         return evaluated;
     }
 
@@ -207,10 +213,17 @@ public class EvalVisitor implements Visitor {
 
     @Override
     public Function visit(Ans f) {
-        if (this.ans instanceof Ans) {
+        if (this.ansList.isEmpty()) {
             return new Ans();
         }
-        return this.ans.accept(this);
+        Integer id = f.getId();
+        if (id == null || id >= this.ansList.size()) {
+            return this.ansList.getLast().accept(this);
+        }
+        if (id <= 0) {
+            return this.ansList.getFirst().accept(this);
+        }
+        return this.ansList.get(id).accept(this);
     }
 
     @Override
